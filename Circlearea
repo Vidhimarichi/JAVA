@@ -1,0 +1,21 @@
+package kiet.edu;
+
+class Area 
+{
+           int r=7;
+           double area;
+           void disp()
+           {
+        	   area=3.15*r*r;
+        	   System.out.println("Area of circle="+area);
+           }
+}
+public class Circlearea
+{
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+      Area ob=new Area();
+      ob.disp();
+    }
+}
