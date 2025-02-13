@@ -1,0 +1,22 @@
+package kiet.edu;
+class count{
+	static int count_value=0;
+	
+	 void count_inc() {
+		count_value++;
+		System.out.println("Object no "+count_value);
+		
+	}
+	 
+}
+
+ class count_obj {
+	public static void main(String[] args) {
+		count obj1 =new count();
+		obj1.count_inc();
+		count obj2 =new count();
+		obj2.count_inc();
+		count obj3 =new count();
+		obj3.count_inc();
+	}
+}
