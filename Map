@@ -1,0 +1,29 @@
+package javaCollection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
+public class MapEx {
+public static void main(String[]Aargs)
+{
+	//HashMap<String,Integer> map=new HashMap<String,Integer>();
+	//LinkedHashMap<String,Integer> map=new LinkedHashMap<String,Integer>();
+	TreeMap<String,Integer> map=new TreeMap<String,Integer>();
+	map.put("One", 1);
+	map.put("Three", 3);
+	map.put("Eight", 4);
+	map.put("Four", 4);
+	map.put("Nine", 9);
+	map.put("Nine", 19);
+	System.out.println(map);
+	System.out.println(map.containsKey("Ten"));
+	System.out.println(map.containsValue(9));
+    map.remove("Three");
+    System.out.println(map);
+    System.out.println();
+    for(Integer value:map.values())
+    {
+    	System.out.println(value+" ");
+    }
+
+}
+}
