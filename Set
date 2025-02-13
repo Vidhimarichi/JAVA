@@ -1,0 +1,33 @@
+package javaCollection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.TreeSet;
+import java.util.Iterator;
+public class SetEx {
+	public static void main(String[]args)
+	{
+		Integer data[]= {10,11,11,3,3,5,6};
+		//LinkedHashSet<Integer> set=new LinkedHashSet<Integer>();
+		TreeSet<Integer> set=new TreeSet<Integer>();
+		set.add(12);
+		set.add(45);
+		set.add(78);
+		set.add(34);
+		set.add(87);
+		set.add(12);
+		set.addAll(List.of(data));
+		System.out.println(set);
+		for(Integer i:set)
+		{
+			System.out.println(i+" ");
+		}
+		System.out.println();
+		Iterator<Integer> it= set.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next()+" ");
+		}
+	}
+
+}
