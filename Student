@@ -1,0 +1,120 @@
+package kiet.edu;
+import java.util.Scanner;
+
+public class Student {
+    // Data members
+     String id_no;
+     int number_of_subjects_registered;
+     String[] subject_code;
+     int[] subject_credits;
+     double[] grade_obtained;
+     double spi;
+
+    // No-argument constructor to initialize default values
+    public Student() {
+        this.id_no = "";
+        this.number_of_subjects_registered = 0;
+        this.subject_code = new String[0];
+        this.subject_credits = new int[0];
+        this.grade_obtained = new double[0];
+        this.spi = 0.0;
+    }
+
+    // Constructor to initialize a student with their id and number of subjects
+    public Student(String id_no, int number_of_subjects_registered) {
+        this.id_no = id_no;
+        this.number_of_subjects_registered = number_of_subjects_registered;
+        this.subject_code = new String[number_of_subjects_registered];
+        this.subject_credits = new int[number_of_subjects_registered];
+        this.grade_obtained = new double[number_of_subjects_registered];
+        this.spi = 0.0;
+    }
+
+    // Method to calculate SPI (Semester Performance Index)
+    public void calculateSPI() {
+        double totalCredits = 0;
+        double weightedGrades = 0;
+
+        // Calculate weighted grades and total credits
+        for (int i = 0; i < number_of_subjects_registered; i++) {
+            weightedGrades += grade_obtained[i] * subject_credits[i];
+            totalCredits += subject_credits[i];
+        }
+
+        // Calculate SPI
+        if (totalCredits != 0) {
+            spi = weightedGrades / totalCredits;
+        } else {
+            spi = 0.0;
+        }
+    }
+
+    // Method to input student data
+    public void inputData() {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Input for each subject's data
+        System.out.println("Enter data for student ID: " + id_no);
+        for (int i = 0; i < number_of_subjects_registered; i++) {
+            System.out.print("Enter subject code for subject " + (i + 1) + ": ");
+            subject_code[i] = scanner.nextLine();
+
+            System.out.print("Enter credits for " + subject_code[i] + ": ");
+            subject_credits[i] = scanner.nextInt();
+
+            System.out.print("Enter grade obtained for " + subject_code[i] + ": ");
+            grade_obtained[i] = scanner.nextDouble();
+            scanner.nextLine();  // consume newline
+        }
+
+        // Calculate SPI for the student
+        calculateSPI();
+    }
+
+    // Method to display student data
+    public void displayStudentData() {
+        System.out.println("\nStudent ID: " + id_no);
+        System.out.println("Number of subjects registered: " + number_of_subjects_registered);
+        for (int i = 0; i < number_of_subjects_registered; i++) {
+            System.out.println("Subject Code: " + subject_code[i] + ", Credits: " + subject_credits[i] + ", Grade Obtained: " + grade_obtained[i]);
+        }
+        System.out.println("SPI: " + spi);
+    }
+
+    public static void main(String[] args) {
+        // Creating Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Get the number of students to process
+        System.out.print("Enter the number of students: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        // Array to hold student objects
+        Student[] students = new Student[n];
+
+        // Input data for each student
+        for (int i = 0; i < n; i++) {
+            System.out.print("\nEnter student ID for student " + (i + 1) + ": ");
+            String id = scanner.nextLine();
+
+            System.out.print("Enter number of subjects registered by student " + id + ": ");
+            int numSubjects = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            // Instantiate Student object
+            students[i] = new Student(id, numSubjects);
+
+            // Input data for the student
+            students[i].inputData();
+        }
+
+        // Display data for all students
+        for (int i = 0; i < n; i++) {
+            students[i].displayStudentData();
+        }
+
+        scanner.close();
+    }
+}
+
