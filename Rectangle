@@ -1,0 +1,45 @@
+package kiet.edu;
+
+
+public class Rectangle {
+	    double width;
+	    double height;
+
+	    // 1. No-arg constructor (default rectangle)
+	    public Rectangle() {
+	        width = 4.0;  // Default width
+	        height = 8.0; // Default height
+	    }
+
+	    // 2. Constructor with specified width and height
+	    public Rectangle(double width, double height) {
+	        this.width = width;
+	        this.height = height;
+	    }
+
+	    // 3. Method to get the area
+	    public double getArea() {
+	        return width * height;
+	    }
+
+	    // 4. Method to get the perimeter
+	    public double getPerimeter() {
+	        return 2 * (width + height);
+	    }
+
+	public static void main(String[] args) {
+		
+		        Rectangle rect1 = new Rectangle(); // Default rectangle
+		        Rectangle rect2 = new Rectangle(5, 10); // Custom rectangle
+
+		        System.out.println("Rectangle 1 Area: " + rect1.getArea());
+		        System.out.println("Rectangle 1 Perimeter: " + rect1.getPerimeter());
+
+		        System.out.println("Rectangle 2 Area: " + rect2.getArea());
+		        System.out.println("Rectangle 2 Perimeter: " + rect2.getPerimeter());
+		    }
+		
+	   
+
+	}
+
