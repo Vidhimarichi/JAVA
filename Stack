@@ -1,0 +1,20 @@
+package javaCollection;
+import java.util.Stack;
+public class StackEx 
+{
+         public static void main(String[] args)
+         {
+        	 Stack<String> name=new Stack<String>();
+        	name.push("Vidhi");
+        	name.push("Aditi");
+        	name.push("Avani");
+        	name.push("Sharma");
+        	name.push("Marihi");
+        	System.out.println(name);
+        	System.out.println(name.peek());
+        	name.pop();
+        	System.out.println(name);
+        	
+        	 
+         }
+}
