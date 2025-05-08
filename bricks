@@ -1,0 +1,141 @@
+package training.dsa;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.*;
+
+public class Brick  extends JPanel implements ActionListener{
+	
+	
+	    private Timer timer;
+	    private boolean gameOver = false;
+	    private int score = 0;
+
+	    private int paddleX = 300;
+	    private int paddleY = 550;
+	    private int paddleWidth = 100;
+	    private int paddleHeight = 15;
+
+	    private int ballX = 350;
+	    private int ballY = 530;
+	    private int ballDiameter = 20;
+	    private int ballDX = 2;
+	    private int ballDY = -2;
+
+	    private ArrayList<Rectangle> bricks;
+
+	    public Brick() {
+	        this.setPreferredSize(new Dimension(700, 600));
+	        this.setBackground(Color.BLACK);
+	        this.setFocusable(true);
+	        this.addKeyListener(new KeyAdapter() {
+	            public void keyPressed(KeyEvent e) {
+	                if (e.getKeyCode() == KeyEvent.VK_LEFT && paddleX > 0) {
+	                    paddleX -= 10;
+	                }
+	                if (e.getKeyCode() == KeyEvent.VK_RIGHT && paddleX < getWidth() - paddleWidth) {
+	                    paddleX += 10;
+	                }
+	            }
+	        });
+
+	        // Create bricks
+	        bricks = new ArrayList<>();
+	        for (int i = 0; i < 7; i++) {
+	            for (int j = 0; j < 5; j++) {
+	                bricks.add(new Rectangle(i * 100 + 50, j * 30 + 50, 80, 20));
+	            }
+	        }
+
+	        timer = new Timer(5, this);
+	        timer.start();
+	    }
+
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        if (!gameOver) {
+	            moveBall();
+	            checkCollisions();
+	            repaint();
+	        }
+	    }
+
+	    private void moveBall() {
+	        ballX += ballDX;
+	        ballY += ballDY;
+
+	        // Ball collision with left and right walls
+	        if (ballX <= 0 || ballX >= getWidth() - ballDiameter) {
+	            ballDX = -ballDX;
+	        }
+
+	        // Ball collision with top wall
+	        if (ballY <= 0) {
+	            ballDY = -ballDY;
+	        }
+
+	        // Ball falls below the paddle
+	        if (ballY >= getHeight()) {
+	            gameOver = true;
+	        }
+
+	        // Ball collision with the paddle
+	        if (new Rectangle(ballX, ballY, ballDiameter, ballDiameter).intersects(new Rectangle(paddleX, paddleY, paddleWidth, paddleHeight))) {
+	            ballDY = -ballDY;
+	        }
+	    }
+
+	    private void checkCollisions() {
+	        for (int i = 0; i < bricks.size(); i++) {
+	            Rectangle brick = bricks.get(i);
+	            if (new Rectangle(ballX, ballY, ballDiameter, ballDiameter).intersects(brick)) {
+	                bricks.remove(i);
+	                ballDY = -ballDY;
+	                score += 10;
+	                break;
+	            }
+	        }
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+
+	        // Draw the ball
+	        g.setColor(Color.RED);
+	        g.fillOval(ballX, ballY, ballDiameter, ballDiameter);
+
+	        // Draw the paddle
+	        g.setColor(Color.GREEN);
+	        g.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
+
+	        // Draw the bricks
+	        g.setColor(Color.BLUE);
+	        for (Rectangle brick : bricks) {
+	            g.fillRect(brick.x, brick.y, brick.width, brick.height);
+	        }
+
+	        // Display score
+	        g.setColor(Color.WHITE);
+	        g.drawString("Score: " + score, 10, 20);
+
+	        // Game Over
+	        if (gameOver) {
+	            g.setColor(Color.WHITE);
+	            g.setFont(new Font("Arial", Font.BOLD, 30));
+	            g.drawString("Game Over!", getWidth() / 2 - 100, getHeight() / 2);
+	            g.drawString("Final Score: " + score, getWidth() / 2 - 100, getHeight() / 2 + 40);
+	        }
+	    }
+
+	    public static void main(String[] args) {
+	        JFrame frame = new JFrame("Brick Breaker");
+	        Brick gamePanel = new Brick();
+	        frame.add(gamePanel);
+	        frame.pack();
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.setVisible(true);
+	  }
+}
+
+
